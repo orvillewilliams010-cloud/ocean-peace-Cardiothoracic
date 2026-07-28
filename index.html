@@ -8,7 +8,7 @@
   <meta name="author" content="Ocean Peace Cardiothoracic Surgery">
   
   <!-- Open Graph / Social Media Meta -->
-  <meta property="og:title" content="Ocean Peace Cardiothoracic Surgery | Advanced Surgical Care">
+  <meta property="og:title" content="Ocean Peace Cardiothoracic Surgery | Advanced Heart & Thoracic Care">
   <meta property="og:description" content="Board-Certified Excellence in Cardiac, Robotic, & Thoracic Surgery. Personalized, compassionate surgical treatment.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="/favicon.svg">
@@ -18,7 +18,12 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   
-  <!-- Stylesheets -->
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="./src/style.css">
 </head>
 <body>
@@ -27,12 +32,12 @@
   <div class="emergency-bar">
     <div class="container">
       <div class="emergency-tag">
-        <span class="pulse-dot"></span> 24/7 Emergency Surgical Hotline & Direct Hospital Transfer
+        <span class="pulse-dot"></span> 24/7 Emergency Surgical Transfer & Acute Care Triage Desk
       </div>
       <div class="emergency-info">
-        <span>Direct Triage: <a href="tel:18005557874">1-800-555-SURG (7874)</a></span>
-        <span style="opacity:0.4;">|</span>
-        <span>Transfer Desk: <a href="#contact">Hospital Direct Line</a></span>
+        <span>Emergency Line: <a href="tel:18005557874">1-800-555-SURG (7874)</a></span>
+        <span class="divider">|</span>
+        <span>Hospital Transfer Desk: <a href="#contact">Direct Referral Desk</a></span>
       </div>
     </div>
   </div>
@@ -43,7 +48,7 @@
       <nav class="navbar" aria-label="Main Navigation">
         <a href="#" class="brand-logo">
           <div class="brand-icon-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
               <path d="M12 5v14"/>
             </svg>
@@ -56,11 +61,11 @@
 
         <ul class="nav-links">
           <li><a href="#about" class="nav-link">About Surgeon</a></li>
+          <li><a href="#robotic-showcase" class="nav-link">Robotic Innovation</a></li>
           <li><a href="#procedures" class="nav-link">Surgical Specialties</a></li>
-          <li><a href="#recovery" class="nav-link">Patient Recovery Hub</a></li>
-          <li><a href="#testimonials" class="nav-link">Clinical Outcomes</a></li>
-          <li><a href="#contact" class="nav-link">Locations</a></li>
-          <li><a href="#consultation" class="btn btn-primary">Book Consultation</a></li>
+          <li><a href="#recovery" class="nav-link">Recovery Hub</a></li>
+          <li><a href="#testimonials" class="nav-link">Outcomes</a></li>
+          <li><a href="#consultation" class="btn btn-primary nav-cta">Book Consultation</a></li>
         </ul>
 
         <button class="mobile-nav-toggle" aria-label="Toggle Menu">
@@ -75,89 +80,104 @@
   <main>
     <!-- 3. Hero Section -->
     <section class="hero-section">
+      <div class="hero-bg-image" style="background-image: url('./images/hero_surgical_suite.jpg');"></div>
+      <div class="hero-overlay-gradient"></div>
       <div class="hero-backdrop-glow"></div>
+
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content">
             <div class="hero-badge">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
-              </svg>
-              Board Certified Cardiothoracic Surgery Practice
+              <span class="badge-icon">★</span>
+              <span>STS 3-Star Rated High-Volume Surgical Practice</span>
             </div>
 
             <h1 class="hero-title">
-              Pioneering Heart & Thoracic Excellence with <span class="text-gradient">Peace & Precision</span>
+              Pioneering Heart & Thoracic Care with <span class="text-gradient">Peace & Precision</span>
             </h1>
 
             <p class="hero-subtitle">
-              Delivering life-saving cardiac, robotic, and thoracic procedures with advanced surgical techniques, high-volume surgical expertise, and compassionate patient-first care.
+              Delivering life-saving cardiac, robotic, and thoracic procedures using state-of-the-art sternal-sparing techniques, beating-heart bypass, and compassionate patient-first care.
             </p>
 
             <div class="hero-actions">
-              <a href="#consultation" class="btn btn-primary">
-                Schedule Consultation
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              <a href="#consultation" class="btn btn-primary btn-lg">
+                <span>Schedule Consultation</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </a>
-              <a href="#procedures" class="btn btn-secondary">
-                Explore Procedures
+              <a href="#triage-wizard" class="btn btn-secondary btn-lg">
+                <span>Surgical Triage Wizard</span>
               </a>
             </div>
 
-            <!-- Trust Bar / Key Statistics -->
+            <!-- Key Statistics Bar -->
             <div class="hero-trust-bar">
               <div class="trust-item">
-                <span class="trust-number">20+</span>
-                <span class="trust-label">Years Surgical Leadership</span>
+                <span class="trust-number" data-target="20">20+</span>
+                <span class="trust-label">Years Leadership</span>
               </div>
               <div class="trust-item">
-                <span class="trust-number">5,000+</span>
+                <span class="trust-number" data-target="5000">5,000+</span>
                 <span class="trust-label">Successful Operations</span>
               </div>
               <div class="trust-item">
-                <span class="trust-number">99.4%</span>
-                <span class="trust-label">Clinical Survival Rate</span>
+                <span class="trust-number" data-target="99.4">99.4%</span>
+                <span class="trust-label">Survival Rate</span>
               </div>
             </div>
           </div>
 
-          <!-- Hero Graphic Card -->
+          <!-- Hero Telemetry Monitor Card -->
           <div class="hero-visual-container">
             <div class="hero-visual-card">
               <div class="visual-card-header">
                 <div class="doctor-profile-preview">
-                  <div class="doctor-avatar">OW</div>
+                  <img src="./images/surgeon_portrait.jpg" alt="Dr. Williams, MD, FACS" class="doctor-avatar-img">
                   <div class="doctor-info">
                     <h4>Dr. Williams, MD, FACS</h4>
                     <p>Lead Cardiothoracic Surgeon</p>
                   </div>
                 </div>
                 <div class="card-status-badge">
-                  <span class="pulse-dot" style="background:#22c55e; box-shadow:0 0 8px #22c55e;"></span> Clinic Active
+                  <span class="pulse-dot-green"></span> OR Active
                 </div>
               </div>
 
-              <!-- Animated ECG Monitor Graphic -->
+              <!-- Interactive Live Monitor Header -->
+              <div class="monitor-status-header">
+                <div class="monitor-title">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Intraoperative Telemetry Simulation
+                </div>
+                <div class="bpm-display"><span id="bpmValue">72</span> BPM</div>
+              </div>
+
+              <!-- Animated ECG Line SVG -->
               <div class="ecg-visualizer">
                 <svg class="ecg-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
                   <path class="ecg-path" d="M 0 50 L 100 50 L 115 35 L 130 65 L 145 10 L 160 90 L 175 40 L 190 50 L 300 50 L 315 35 L 330 65 L 345 10 L 360 90 L 375 40 L 390 50 L 500 50" fill="none" stroke-width="3"/>
                 </svg>
               </div>
 
+              <!-- Quick Stat Badges Grid -->
               <div class="quick-stats-grid">
                 <div class="quick-stat-box">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <div class="stat-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
                   <div>
-                    <div class="title">Specialty</div>
-                    <div class="value">CABG & Valve Repair</div>
+                    <div class="title">Primary Technique</div>
+                    <div class="value">Off-Pump & Robotic</div>
                   </div>
                 </div>
 
                 <div class="quick-stat-box">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  <div class="stat-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  </div>
                   <div>
-                    <div class="title">Technique</div>
-                    <div class="value">Robotic Sternal-Sparing</div>
+                    <div class="title">Recovery Acceleration</div>
+                    <div class="value">3x Faster Discharge</div>
                   </div>
                 </div>
               </div>
@@ -168,20 +188,24 @@
       </div>
     </section>
 
-    <!-- 4. Board Certifications & Professional Badges -->
+    <!-- 4. Board Certifications & Professional Accreditations -->
     <section class="credentials-section">
       <div class="container">
         <div class="credentials-flex">
           <div class="cred-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15l-2 5l-1.5 -2l-2.5 1l1 -3.5"/><path d="M12 15l2 5l1.5 -2l2.5 1l-1 -3.5"/><circle cx="12" cy="9" r="6"/></svg>
+            <div class="cred-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15l-2 5l-1.5 -2l-2.5 1l1 -3.5"/><path d="M12 15l2 5l1.5 -2l2.5 1l-1 -3.5"/><circle cx="12" cy="9" r="6"/></svg>
+            </div>
             <div class="cred-text">
               <strong>American Board of Thoracic Surgery</strong>
-              <span>Certified Specialist in Cardiac & Thoracic Surgery</span>
+              <span>Certified Specialist in Adult Cardiac & Thoracic Surgery</span>
             </div>
           </div>
 
           <div class="cred-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+            <div class="cred-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+            </div>
             <div class="cred-text">
               <strong>Fellow, American College of Surgeons (FACS)</strong>
               <span>Senior Surgical Academic Fellow</span>
@@ -189,81 +213,190 @@
           </div>
 
           <div class="cred-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <div class="cred-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
             <div class="cred-text">
               <strong>Society of Thoracic Surgeons (STS)</strong>
-              <span>Active Surgical Member & Quality Contributor</span>
+              <span>3-Star Top Tier Quality Composite Rating</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5. About Dr. Williams & Practice Philosophy -->
+    <!-- 5. Interactive Surgical Triage & Self-Assessment Tool -->
+    <section id="triage-wizard" class="triage-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Interactive Patient Assessment</span>
+          <h2 class="section-title">Are You a Candidate for Robotic or Minimally Invasive Surgery?</h2>
+          <p class="section-desc">
+            Use our interactive candidate finder below to explore potential surgical options based on your diagnosis or referred condition.
+          </p>
+        </div>
+
+        <div class="triage-card">
+          <div class="triage-steps">
+            <button class="triage-step-btn active" data-step="1">1. Primary Condition</button>
+            <button class="triage-step-btn" data-step="2">2. Prior Interventions</button>
+            <button class="triage-step-btn" data-step="3">3. Recommended Pathway</button>
+          </div>
+
+          <div id="triageStepContent" class="triage-content">
+            <!-- Dynamic JS rendering -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. About Dr. Williams & Surgical Practice -->
     <section id="about" class="about-section">
       <div class="container">
         <div class="about-grid">
-          <div class="about-image-card">
-            <div class="doctor-badge-floating" style="margin-bottom: 1.5rem;">
-              <span class="text-gradient-teal" style="font-weight:800; font-size:1.4rem;">Ocean Peace Philosophy</span>
+          <div class="about-image-column">
+            <div class="about-portrait-card">
+              <img src="./images/surgeon_portrait.jpg" alt="Dr. Williams MD, FACS" class="portrait-img">
+              <div class="portrait-overlay">
+                <div class="portrait-badge">
+                  <span class="badge-title">Dr. Williams, MD, FACS</span>
+                  <span class="badge-sub">20+ Years Surgical Excellence</span>
+                </div>
+              </div>
             </div>
-            <p style="color: var(--text-muted); line-height:1.7;">
-              "At Ocean Peace Cardiothoracic Surgery, we believe complex heart and lung surgery requires not only peak anatomical precision, but an atmosphere of profound calm, absolute transparency, and unwavering patient support."
-            </p>
-            <div class="doctor-bio-highlight">
-              "Every heartbeat tells a story. Our mission is to protect that heartbeat with the most advanced surgical technology available today."
+
+            <!-- Stats overlay bar -->
+            <div class="about-stats-bar">
+              <div class="stat-pill">
+                <span class="num">1,800+</span>
+                <span class="lbl">Bypass Surgeries</span>
+              </div>
+              <div class="stat-pill">
+                <span class="num">1,200+</span>
+                <span class="lbl">Valve Repairs</span>
+              </div>
+              <div class="stat-pill">
+                <span class="num">900+</span>
+                <span class="lbl">Robotic Procedures</span>
+              </div>
             </div>
-            
-            <h4 style="font-size:1.1rem; color:#fff; margin-top:1.5rem; margin-bottom:0.75rem;">Surgical Fellowships & Training</h4>
-            <ul class="fellowship-list">
-              <li class="fellowship-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-                Cardiothoracic Surgery Fellowship
-              </li>
-              <li class="fellowship-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-                Robotic Mitral & Aortic Reconstruction
-              </li>
-              <li class="fellowship-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-                Advanced VATS Pulmonary Resection
-              </li>
-              <li class="fellowship-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-                Complex Off-Pump CABG Specialist
-              </li>
-            </ul>
           </div>
 
           <div class="about-text-content">
             <span class="section-tag">Dedicated Surgical Leadership</span>
             <h2 class="section-title">Combining Surgical Mastery with Peaceful Patient Care</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.25rem; font-size:1.05rem;">
-              Facing heart or thoracic surgery can be one of the most critical moments in a patient's life. Ocean Peace Cardiothoracic Surgery was founded on the principal that patients deserve both world-class surgical outcomes and an empathetic clinical team.
+            <p class="lead-text">
+              Facing heart or thoracic surgery can be one of the most critical moments in a patient's life. Ocean Peace Cardiothoracic Surgery was founded on the principle that patients deserve both world-class surgical outcomes and an empathetic clinical team.
             </p>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size:1.05rem;">
-              Dr. Williams specializes in minimally invasive valve repairs, beating-heart bypass surgery, robotic thoracic procedures, and complex aortic reconstructive operations, serving patients with individualized treatment plans tailored to their specific cardiac anatomy.
-            </p>
-            <div style="display:flex; gap:1rem;">
+            <blockquote class="surgeon-quote">
+              "Every heartbeat tells a story. Our mission is to protect that heartbeat with the absolute highest precision and least invasive surgical approach possible."
+              <cite>— Dr. Williams, MD, FACS</cite>
+            </blockquote>
+
+            <h4 class="subheading">Specialized Surgical Fellowships & Training</h4>
+            <div class="fellowship-grid">
+              <div class="fellowship-item">
+                <div class="check-icon">✓</div>
+                <div>
+                  <strong>Cardiothoracic Surgery Fellowship</strong>
+                  <p>Johns Hopkins Medicine / Cleveland Clinic Training</p>
+                </div>
+              </div>
+              <div class="fellowship-item">
+                <div class="check-icon">✓</div>
+                <div>
+                  <strong>Robotic Mitral & Aortic Reconstruction</strong>
+                  <p>DaVinci Xi Certified Console Surgeon</p>
+                </div>
+              </div>
+              <div class="fellowship-item">
+                <div class="check-icon">✓</div>
+                <div>
+                  <strong>Advanced VATS Pulmonary Resection</strong>
+                  <p>Sternal-Sparing & Minimal Port Access</p>
+                </div>
+              </div>
+              <div class="fellowship-item">
+                <div class="check-icon">✓</div>
+                <div>
+                  <strong>Complex Off-Pump CABG Specialist</strong>
+                  <p>Beating-Heart Revascularization Specialist</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-cta-row">
               <a href="#consultation" class="btn btn-primary">Request Second Opinion</a>
-              <a href="#procedures" class="btn btn-outline">Explore Surgical Specialties</a>
+              <a href="#procedures" class="btn btn-outline">Explore Procedures</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. Surgical Specialties & Interactive Procedure Explorer -->
+    <!-- 7. Robotic & Minimally Invasive Feature Showcase -->
+    <section id="robotic-showcase" class="robotic-showcase-section">
+      <div class="container">
+        <div class="showcase-grid">
+          <div class="showcase-text">
+            <span class="section-tag">Sternal-Sparing Precision</span>
+            <h2 class="section-title">The Future of Heart Surgery: Robotic Port-Access</h2>
+            <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.5rem;">
+              Traditional cardiac surgery requires dividing the sternum (breastbone), which takes 8 to 12 weeks to heal. Robotic and port-access surgery operates through tiny 2-4 cm lateral rib-space incisions without breaking a single bone.
+            </p>
+
+            <div class="comparison-pills">
+              <div class="comparison-card robotic-card">
+                <div class="comp-header">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  Robotic Port-Access
+                </div>
+                <ul>
+                  <li>✓ No sternal division (Zero bone break)</li>
+                  <li>✓ 2 to 3 days hospital stay</li>
+                  <li>✓ Full driving clearance in 10-14 days</li>
+                  <li>✓ Minimal scar line (hidden under arm)</li>
+                </ul>
+              </div>
+
+              <div class="comparison-card traditional-card">
+                <div class="comp-header">
+                  Traditional Open Sternotomy
+                </div>
+                <ul>
+                  <li>✕ Full 8-inch sternal bone incision</li>
+                  <li>✕ 5 to 7 days hospital stay</li>
+                  <li>✕ 8 to 12 weeks strict lifting limits</li>
+                  <li>✕ High postoperative pain score</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-visual">
+            <div class="tech-image-container">
+              <img src="./images/robotic_heart_tech.jpg" alt="3D Robotic Cardiac Mapping" class="tech-img">
+              <div class="tech-overlay-tag">
+                <span class="pulse-dot"></span> DaVinci Xi 3D High-Definition Console Vision
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Surgical Specialties & Interactive Explorer -->
     <section id="procedures" class="procedures-section">
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Clinical Excellence</span>
           <h2 class="section-title">Specialized Surgical Procedures</h2>
           <p class="section-desc">
-            Explore our spectrum of adult cardiac, minimally invasive robotic, and advanced thoracic surgical interventions.
+            Explore our comprehensive spectrum of adult cardiac, minimally invasive robotic, and advanced thoracic surgical interventions.
           </p>
         </div>
 
+        <!-- Filter Tabs -->
         <div class="procedure-tabs">
           <button class="tab-btn active" data-tab="all">All Specialties</button>
           <button class="tab-btn" data-tab="cardiac">Adult Cardiac Surgery</button>
@@ -279,7 +412,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
               </div>
               <h3>Coronary Artery Bypass Grafting (CABG)</h3>
-              <p>On-pump and Beating-Heart (Off-Pump) surgical revascularization for multi-vessel coronary artery disease utilizing arterial grafts.</p>
+              <p>On-pump and Beating-Heart (Off-Pump) surgical revascularization for multi-vessel coronary artery disease utilizing autologous arterial conduits.</p>
             </div>
             <div>
               <div class="procedure-meta">
@@ -297,8 +430,8 @@
               <div class="card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M3 12h18"/></svg>
               </div>
-              <h3>Advanced Valve Repair & Replacement</h3>
-              <p>State-of-the-art repair and bioprosthetic replacement of Aortic, Mitral, and Tricuspid valve disease prioritizing leaflet preservation.</p>
+              <h3>Advanced Valve Repair & Reconstruction</h3>
+              <p>State-of-the-art repair and bioprosthetic replacement of Aortic, Mitral, and Tricuspid valve disease prioritizing native leaflet preservation.</p>
             </div>
             <div>
               <div class="procedure-meta">
@@ -370,12 +503,12 @@
       </div>
     </section>
 
-    <!-- 7. Interactive Patient Preparation & Post-Op Recovery Calculator -->
+    <!-- 9. Interactive Post-Op Recovery Timeline Hub -->
     <section id="recovery" class="recovery-tool-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Patient Guidance Hub</span>
-          <h2 class="section-title">Post-Operative Recovery Calculator</h2>
+          <span class="section-tag">Patient Recovery Hub</span>
+          <h2 class="section-title">Personalized Recovery Calculator</h2>
           <p class="section-desc">
             Select your planned surgical procedure below to view your personalized recovery timeline, physical mobility targets, and sternal precaution guidelines.
           </p>
@@ -396,12 +529,12 @@
                 </select>
               </div>
 
-              <div style="background:rgba(0,242,254,0.05); border:1px solid var(--border-accent); border-radius:var(--radius-md); padding:1.25rem; margin-top:1.5rem;">
-                <h4 style="font-size:0.95rem; color:var(--primary-cyan); margin-bottom:0.5rem;">Pre-Surgery Checklist Downloads</h4>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Download official printable patient preparation forms & medication management instructions.</p>
-                <a href="#consultation" class="btn btn-outline" style="font-size:0.85rem; padding:0.5rem 1rem;">
-                  📥 Download Pre-Op Patient Packet (PDF)
-                </a>
+              <div class="download-pack-box">
+                <h4>📥 Pre-Surgery Patient Packet</h4>
+                <p>Download official printable patient preparation forms & medication management instructions.</p>
+                <button id="downloadPdfBtn" class="btn btn-outline btn-sm">
+                  Download Pre-Op Packet (PDF)
+                </button>
               </div>
             </div>
 
@@ -415,12 +548,12 @@
       </div>
     </section>
 
-    <!-- 8. Clinical Outcomes & Patient Testimonials -->
+    <!-- 10. Patient Reviews & Clinical Outcome Stories -->
     <section id="testimonials" class="testimonials-section">
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Patient Trust & Outcomes</span>
-          <h2 class="section-title">Stories of Recovery & Hope</h2>
+          <h2 class="section-title">Stories of Recovery & Renewed Hope</h2>
           <p class="section-desc">
             Read first-hand experiences from patients who underwent cardiac and thoracic procedures at Ocean Peace.
           </p>
@@ -478,7 +611,7 @@
       </div>
     </section>
 
-    <!-- 9. Interactive Consultation Request Form -->
+    <!-- 11. Interactive Consultation Request Form -->
     <section id="consultation" class="consultation-section">
       <div class="container">
         <div class="consultation-grid">
@@ -568,7 +701,15 @@
     </section>
   </main>
 
-  <!-- 10. Footer -->
+  <!-- 12. Floating Triage Action Pill -->
+  <div class="floating-triage-pill" id="floatingPill">
+    <a href="#consultation" class="pill-btn">
+      <span class="pulse-dot"></span>
+      <span>Book Consultation</span>
+    </a>
+  </div>
+
+  <!-- 13. Footer -->
   <footer id="contact" class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -602,7 +743,7 @@
           <h4>Patient Resources</h4>
           <ul class="footer-links">
             <li><a href="#recovery">Recovery Calculator</a></li>
-            <li><a href="#recovery">Pre-Op Preparation</a></li>
+            <li><a href="#triage-wizard">Robotic Triage Finder</a></li>
             <li><a href="#testimonials">Patient Reviews</a></li>
             <li><a href="#consultation">Second Opinions</a></li>
           </ul>
@@ -621,7 +762,7 @@
 
       <div class="footer-bottom">
         <div>
-          © 2026 Ocean Peace Cardiothoracic Surgery. All rights reserved. Primed for Hostinger Deployment.
+          © 2026 Ocean Peace Cardiothoracic Surgery. All rights reserved. Vercel & Hostinger Deployment Ready.
         </div>
         <div style="display:flex; gap:1.5rem;">
           <a href="#" style="color:var(--text-dim); text-decoration:none;">Privacy Policy</a>

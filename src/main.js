@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Ocean Peace Cardiothoracic Surgery - Main JavaScript Application
+   Ocean Peace Cardiothoracic Surgery - Main Interactive JavaScript Application
    ========================================================================== */
 
 // --- Surgical Procedures Dataset ---
@@ -113,14 +113,27 @@ const RECOVERY_RULES = {
   }
 };
 
+// --- Triage Wizard Options ---
+const TRIAGE_DATA = {
+  conditions: [
+    { id: 'coronary', title: 'Coronary Artery Blockage (Angina / MI)', desc: 'Chest pain, shortness of breath, or abnormal cardiac catheterization report.' },
+    { id: 'valve_issue', title: 'Heart Valve Murmur / Stenosis / Regurgitation', desc: 'Leaky or tight Mitral, Aortic, or Tricuspid valve diagnosed on Echocardiogram.' },
+    { id: 'aortic_aneurysm', title: 'Thoracic Aortic Aneurysm or Dissection', desc: 'Enlarged ascending aorta or structural dilation detected on CT scan.' },
+    { id: 'lung_nodule', title: 'Pulmonary Nodule / Lung Mass', desc: 'Abnormal X-Ray or CT chest scan requiring diagnostic lobectomy or biopsy.' }
+  ]
+};
+
 // --- DOM Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initAnimatedCounters();
+  initBpmMonitor();
+  initTriageWizard();
   initProcedureTabs();
   initModalListeners();
   initRecoveryCalculator();
   initConsultationForm();
+  initPdfDownload();
   initSmoothScroll();
 });
 
@@ -136,7 +149,6 @@ function initMobileNav() {
       toggleBtn.setAttribute('aria-expanded', isExpanded);
     });
 
-    // Close menu when link clicked
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
@@ -147,7 +159,7 @@ function initMobileNav() {
 
 // 2. Animated Counter Numbers
 function initAnimatedCounters() {
-  const counters = document.querySelectorAll('.trust-number, .quick-stat-box .value');
+  const counters = document.querySelectorAll('.trust-number, .stat-pill .num');
   let animated = false;
 
   const observer = new IntersectionObserver((entries) => {
@@ -156,9 +168,9 @@ function initAnimatedCounters() {
         animated = true;
         counters.forEach(counter => {
           const targetText = counter.textContent.trim();
-          const match = targetText.match(/([\d,]+)/);
+          const match = targetText.match(/([\d,]+(\.\d+)?)/);
           if (match) {
-            const numericValue = parseInt(match[0].replace(/,/g, ''), 10);
+            const numericValue = parseFloat(match[0].replace(/,/g, ''));
             const prefix = targetText.substring(0, match.index);
             const suffix = targetText.substring(match.index + match[0].length);
             
@@ -171,10 +183,10 @@ function initAnimatedCounters() {
             const timer = setInterval(() => {
               start += increment;
               if (start >= numericValue) {
-                counter.textContent = prefix + numericValue.toLocaleString() + suffix;
+                counter.textContent = prefix + (numericValue % 1 !== 0 ? numericValue.toFixed(1) : numericValue.toLocaleString()) + suffix;
                 clearInterval(timer);
               } else {
-                counter.textContent = prefix + Math.floor(start).toLocaleString() + suffix;
+                counter.textContent = prefix + (numericValue % 1 !== 0 ? start.toFixed(1) : Math.floor(start).toLocaleString()) + suffix;
               }
             }, stepTime);
           }
@@ -187,7 +199,120 @@ function initAnimatedCounters() {
   if (heroBar) observer.observe(heroBar);
 }
 
-// 3. Procedure Filter Tabs
+// 3. Live BPM Heart Rate Monitor Simulator
+function initBpmMonitor() {
+  const bpmElem = document.getElementById('bpmValue');
+  if (bpmElem) {
+    setInterval(() => {
+      const randomBpm = Math.floor(68 + Math.random() * 8);
+      bpmElem.textContent = randomBpm;
+    }, 2500);
+  }
+}
+
+// 4. Interactive Candidate Triage Wizard
+function initTriageWizard() {
+  const container = document.getElementById('triageStepContent');
+  if (!container) return;
+
+  let currentStep = 1;
+  let selectedCondition = null;
+
+  const renderStep = () => {
+    if (currentStep === 1) {
+      container.innerHTML = `
+        <h3 style="font-size:1.3rem; margin-bottom:1.5rem; color:#fff;">Select Your Referred Diagnosis or Primary Symptom:</h3>
+        <div class="triage-options-grid">
+          ${TRIAGE_DATA.conditions.map(c => `
+            <div class="triage-option-card ${selectedCondition === c.id ? 'selected' : ''}" data-id="${c.id}">
+              <h4>${c.title}</h4>
+              <p>${c.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      container.querySelectorAll('.triage-option-card').forEach(card => {
+        card.addEventListener('click', () => {
+          selectedCondition = card.dataset.id;
+          currentStep = 2;
+          updateStepButtons();
+          renderStep();
+        });
+      });
+    } else if (currentStep === 2) {
+      container.innerHTML = `
+        <h3 style="font-size:1.3rem; margin-bottom:1rem; color:#fff;">Have you had prior open heart surgery or sternotomy?</h3>
+        <p style="color:var(--text-muted); margin-bottom:1.5rem;">Sternal-sparing robotic access is highly recommended for patients seeking to avoid re-sternotomy risks.</p>
+        <div style="display:flex; gap:1.5rem;">
+          <button class="btn btn-secondary btn-lg" id="priorNo">No Prior Surgery (First-time)</button>
+          <button class="btn btn-secondary btn-lg" id="priorYes">Yes, Prior Heart Surgery</button>
+        </div>
+      `;
+
+      document.getElementById('priorNo').addEventListener('click', () => {
+        currentStep = 3;
+        updateStepButtons();
+        renderStep();
+      });
+
+      document.getElementById('priorYes').addEventListener('click', () => {
+        currentStep = 3;
+        updateStepButtons();
+        renderStep();
+      });
+    } else if (currentStep === 3) {
+      let recTitle = 'Robotic Sternal-Sparing Candidate';
+      let recDesc = 'Based on your selection, you are an excellent candidate for minimally invasive port-access evaluation by Dr. Williams.';
+
+      if (selectedCondition === 'coronary') {
+        recTitle = 'Off-Pump Beating-Heart CABG Specialist Evaluation';
+        recDesc = 'Our off-pump bypass program eliminates the heart-lung machine for optimal brain & renal protection.';
+      } else if (selectedCondition === 'aortic_aneurysm') {
+        recTitle = 'Valve-Sparing Aortic Reconstruction Consultation';
+        recDesc = 'Complex aortic root repair preserving your native valve leaflets.';
+      }
+
+      container.innerHTML = `
+        <div style="background:rgba(0,242,254,0.06); border:1px solid var(--border-accent); border-radius:var(--radius-lg); padding:2rem;">
+          <span style="background:rgba(16,185,129,0.2); color:#4ade80; padding:0.3rem 0.8rem; border-radius:99px; font-weight:700; font-size:0.8rem; text-transform:uppercase;">Candidate Assessment Complete</span>
+          <h3 style="font-size:1.6rem; color:#fff; margin:1rem 0 0.5rem;">${recTitle}</h3>
+          <p style="color:var(--text-muted); font-size:1rem; margin-bottom:1.5rem;">${recDesc}</p>
+          <div style="display:flex; gap:1rem;">
+            <a href="#consultation" class="btn btn-primary btn-lg">Schedule Priority Evaluation →</a>
+            <button class="btn btn-outline" id="restartWizard">Restart Assessment</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('restartWizard')?.addEventListener('click', () => {
+        currentStep = 1;
+        selectedCondition = null;
+        updateStepButtons();
+        renderStep();
+      });
+    }
+  };
+
+  const updateStepButtons = () => {
+    document.querySelectorAll('.triage-step-btn').forEach(btn => {
+      const step = parseInt(btn.dataset.step, 10);
+      btn.classList.toggle('active', step === currentStep);
+    });
+  };
+
+  document.querySelectorAll('.triage-step-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentStep = parseInt(btn.dataset.step, 10);
+      updateStepButtons();
+      renderStep();
+    });
+  });
+
+  renderStep();
+}
+
+// 5. Procedure Filter Tabs
 function initProcedureTabs() {
   const tabBtns = document.querySelectorAll('.tab-btn');
   const cards = document.querySelectorAll('.procedure-card');
@@ -211,13 +336,12 @@ function initProcedureTabs() {
   });
 }
 
-// 4. Modal Handler
+// 6. Modal Handler
 function initModalListeners() {
   const modalOverlay = document.getElementById('procedureModal');
   const modalCloseBtn = document.querySelector('.modal-close-btn');
 
   if (modalOverlay) {
-    // Open Modal Triggers
     document.querySelectorAll('.open-procedure-modal').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -228,7 +352,6 @@ function initModalListeners() {
       });
     });
 
-    // Close listeners
     if (modalCloseBtn) {
       modalCloseBtn.addEventListener('click', () => {
         modalOverlay.classList.remove('active');
@@ -249,30 +372,30 @@ function openProcedureModal(data) {
 
   if (modalOverlay && modalBody) {
     modalBody.innerHTML = `
-      <div class="procedure-badge" style="display:inline-block; padding:0.3rem 0.8rem; background:rgba(0,242,254,0.1); border:1px solid var(--border-accent); border-radius:999px; color:var(--primary-cyan); font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:1rem;">${data.subtitle}</div>
-      <h2 style="font-size: 1.8rem; margin-bottom: 0.75rem; color: #fff;">${data.title}</h2>
-      <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem; line-height:1.6;">${data.fullDetails}</p>
+      <div class="procedure-badge" style="display:inline-block; padding:0.35rem 0.9rem; background:rgba(0,242,254,0.12); border:1px solid var(--border-accent); border-radius:999px; color:var(--primary-cyan); font-size:0.8rem; font-weight:800; text-transform:uppercase; margin-bottom:1rem;">${data.subtitle}</div>
+      <h2 style="font-size: 1.85rem; margin-bottom: 0.85rem; color: #fff;">${data.title}</h2>
+      <p style="color: var(--text-muted); font-size: 1.025rem; margin-bottom: 1.5rem; line-height:1.65;">${data.fullDetails}</p>
       
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: rgba(4,13,26,0.6); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-bottom: 1.5rem;">
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: rgba(3,10,22,0.8); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-bottom: 1.5rem;">
         <div>
-          <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase;">Surgery Duration</div>
-          <div style="font-weight:700; color:var(--primary-cyan); font-size:0.95rem;">${data.duration}</div>
+          <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; font-weight:700;">Surgery Duration</div>
+          <div style="font-weight:800; color:var(--primary-cyan); font-size:1rem; margin-top:0.2rem;">${data.duration}</div>
         </div>
         <div>
-          <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase;">Hospital Stay</div>
-          <div style="font-weight:700; color:var(--teal-accent); font-size:0.95rem;">${data.hospitalStay}</div>
+          <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; font-weight:700;">Hospital Stay</div>
+          <div style="font-weight:800; color:var(--teal-accent); font-size:1rem; margin-top:0.2rem;">${data.hospitalStay}</div>
         </div>
         <div>
-          <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase;">Full Recovery</div>
-          <div style="font-weight:700; color:#fff; font-size:0.95rem;">${data.recoveryTime}</div>
+          <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; font-weight:700;">Full Recovery</div>
+          <div style="font-weight:800; color:#fff; font-size:1rem; margin-top:0.2rem;">${data.recoveryTime}</div>
         </div>
       </div>
 
-      <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: #fff;">Key Surgical Advantages</h4>
-      <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem;">
+      <h4 style="font-size: 1.15rem; margin-bottom: 0.85rem; color: #fff;">Key Surgical Advantages</h4>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2rem;">
         ${data.keyFeatures.map(feat => `
-          <li style="display: flex; align-items: flex-start; gap: 0.6rem; color: var(--text-muted); font-size: 0.925rem;">
-            <span style="color: var(--teal-accent); font-weight:700;">✓</span> ${feat}
+          <li style="display: flex; align-items: flex-start; gap: 0.65rem; color: var(--text-muted); font-size: 0.95rem;">
+            <span style="color: var(--teal-accent); font-weight:800;">✓</span> ${feat}
           </li>
         `).join('')}
       </ul>
@@ -291,7 +414,7 @@ function openProcedureModal(data) {
   }
 }
 
-// 5. Patient Recovery Calculator
+// 7. Patient Recovery Calculator
 function initRecoveryCalculator() {
   const selectElem = document.getElementById('calcProcedureSelect');
   const resultsContainer = document.getElementById('recoveryResultsContainer');
@@ -302,16 +425,16 @@ function initRecoveryCalculator() {
       const data = RECOVERY_RULES[procKey] || RECOVERY_RULES.cabg;
 
       resultsContainer.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--border-light); padding-bottom:0.75rem;">
-          <h4 style="font-size:1.1rem; color:#fff;">Estimated Recovery Phase</h4>
-          <span style="background:rgba(20,184,166,0.15); border:1px solid var(--border-teal); color:var(--teal-accent); padding:0.25rem 0.75rem; border-radius:99px; font-size:0.85rem; font-weight:700;">${data.weeks}</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; border-bottom:1px solid var(--border-light); padding-bottom:0.85rem;">
+          <h4 style="font-size:1.15rem; color:#fff;">Estimated Recovery Horizon</h4>
+          <span style="background:rgba(20,184,166,0.18); border:1px solid var(--border-teal); color:var(--teal-accent); padding:0.3rem 0.85rem; border-radius:99px; font-size:0.85rem; font-weight:800;">${data.weeks}</span>
         </div>
 
         <div class="recovery-timeline">
           <div class="timeline-step">
             <div class="step-num">1</div>
             <div class="step-content">
-              <h5>Physical Mobility & Exercise</h5>
+              <h5>Physical Mobility & Exercise Target</h5>
               <p>${data.mobility}</p>
             </div>
           </div>
@@ -331,22 +454,22 @@ function initRecoveryCalculator() {
           </div>
         </div>
 
-        <div style="margin-top:1.5rem; background:rgba(255,77,77,0.1); border:1px solid rgba(255,77,77,0.3); border-radius:var(--radius-md); padding:1rem; display:flex; gap:0.75rem; align-items:flex-start;">
-          <span style="color:var(--pulse-red); font-weight:800;">⚠️</span>
+        <div style="margin-top:1.75rem; background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.35); border-radius:var(--radius-md); padding:1.15rem; display:flex; gap:0.85rem; align-items:flex-start;">
+          <span style="color:var(--pulse-red); font-weight:800; font-size:1.1rem;">⚠️</span>
           <div>
-            <strong style="color:#fff; font-size:0.85rem;">Medical Watch Flags:</strong>
-            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.2rem;">${data.alerts}</p>
+            <strong style="color:#fff; font-size:0.875rem;">Medical Watch Flags:</strong>
+            <p style="font-size:0.825rem; color:var(--text-muted); margin-top:0.25rem;">${data.alerts}</p>
           </div>
         </div>
       `;
     };
 
     selectElem.addEventListener('change', updateCalculator);
-    updateCalculator(); // Initialize default
+    updateCalculator();
   }
 }
 
-// 6. Consultation Booking Form Handler
+// 8. Consultation Booking Form Handler
 function initConsultationForm() {
   const form = document.getElementById('consultationForm');
 
@@ -359,26 +482,22 @@ function initConsultationForm() {
       const procedure = formData.get('procedureType') || 'General Consultation';
       const refNumber = 'OP-' + Math.floor(100000 + Math.random() * 900000);
 
-      // Show Toast Notification
       showToast(`Request Received! Reference: ${refNumber}`);
-
-      // Reset form
       form.reset();
 
-      // Show confirmation alert modal
       const modalOverlay = document.getElementById('procedureModal');
       const modalBody = document.getElementById('modalBody');
 
       if (modalOverlay && modalBody) {
         modalBody.innerHTML = `
           <div style="text-align: center; padding: 1rem 0;">
-            <div style="width: 70px; height: 70px; background: rgba(34,197,94,0.15); border: 2px solid #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: #22c55e; font-size: 2rem;">✓</div>
-            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff;">Consultation Request Submitted</h2>
-            <p style="color: var(--teal-accent); font-weight: 700; font-size: 1.1rem; margin-bottom: 1.5rem;">Confirmation Reference: ${refNumber}</p>
-            <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto 2rem; line-height: 1.6;">
+            <div style="width: 76px; height: 76px; background: rgba(16,185,129,0.18); border: 2px solid var(--emerald-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--emerald-green); font-size: 2.2rem; font-weight:800;">✓</div>
+            <h2 style="font-size: 1.9rem; margin-bottom: 0.5rem; color: #fff;">Consultation Request Received</h2>
+            <p style="color: var(--teal-accent); font-weight: 800; font-size: 1.15rem; margin-bottom: 1.5rem;">Confirmation Reference: ${refNumber}</p>
+            <p style="color: var(--text-muted); font-size: 1rem; max-width: 520px; margin: 0 auto 2.25rem; line-height: 1.65;">
               Thank you, <strong>${name}</strong>. Our clinical triage coordinator at Ocean Peace Cardiothoracic Surgery has received your request regarding <strong>${procedure}</strong> and will contact you within 24 hours to finalize your appointment time.
             </p>
-            <button class="btn btn-primary" onclick="document.getElementById('procedureModal').classList.remove('active')">Return to Website</button>
+            <button class="btn btn-primary btn-lg" onclick="document.getElementById('procedureModal').classList.remove('active')">Return to Website</button>
           </div>
         `;
         modalOverlay.classList.add('active');
@@ -387,7 +506,21 @@ function initConsultationForm() {
   }
 }
 
-// 7. Toast Notification Utility
+// 9. PDF Packet Download Handler
+function initPdfDownload() {
+  const downloadBtn = document.getElementById('downloadPdfBtn');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('Generating Printable Pre-Op Patient Packet...');
+      setTimeout(() => {
+        showToast('Download complete: Ocean_Peace_Patient_Preparation_Guide.pdf');
+      }, 1500);
+    });
+  }
+}
+
+// 10. Toast Notification Utility
 function showToast(message) {
   let container = document.querySelector('.toast-container');
   if (!container) {
@@ -407,13 +540,13 @@ function showToast(message) {
 
   setTimeout(() => {
     toast.style.opacity = '0';
-    toast.style.transform = 'translateX(100%)';
+    toast.style.transform = 'translateX(-100%)';
     toast.style.transition = 'all 0.3s ease';
     setTimeout(() => toast.remove(), 300);
   }, 4000);
 }
 
-// 8. Smooth Internal Links Scroll
+// 11. Smooth Internal Links Scroll
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
